@@ -92,13 +92,3 @@ Outputs:
     Description: API Gateway endpoint URL
     Value:
       Fn::Sub: https://${MyApi}.execute-api.${AWS::Region}.amazonaws.com/${ApiStageName}/post
-  LambdaFunctionARN:
-    Description: ARN of the deployed Lambda function
-    Value:
-      Fn::GetAtt:
-      - MyLambdaFunction
-      - Arn
-  DynamoDBTableName:
-    Description: DynamoDB Table Name
-    Value:
-      Ref: DynamoDBTableName
