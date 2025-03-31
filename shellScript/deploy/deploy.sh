@@ -4,13 +4,12 @@ Stage="dev"
 Project="sam-app2"
 Region="us-east-1"
 DynamoDBTableName="MyTable"
-S3Bucket="sam-bucket-25102002" 
-TemplateFile="template/templateShell.yaml"
+S3Bucket="sam-bucket-25102002"
+TemplateFile="../../template/templateShell.yaml"
 LambdaFunctionName="LambdaFunctionName"
 StackName="${Project}-stack"
 
-
-if ! aws s3 ls "s3://$S3Bucket" 
+if ! aws s3 ls "s3://$S3Bucket"
 then
     echo "S3 bucket $S3Bucket does not exist. Creating..."
     aws s3 mb "s3://$S3Bucket" --region $Region
@@ -26,7 +25,6 @@ sam package \
     --output-template-file packagedDeploy-template.yaml \
     --region $Region
 
-
 echo "Deploying application"
 
 sam deploy \
@@ -39,6 +37,7 @@ sam deploy \
     --parameter-overrides \
         Stage=${Stage} \
         DynamoDBTableName=${DynamoDBTableName} \
-        LambdaFunctionName=${LambdaFunctionName}
+        LambdaFunctionName=${LambdaFunctionName} \
+    --tags created_by="vignesh" purpose="learning"
 
-echo "deployment complete!"
+echo "Deployment complete!"
