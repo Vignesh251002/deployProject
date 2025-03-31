@@ -5,7 +5,7 @@ Project="sam-app2"
 Region="us-east-1"
 DynamoDBTableName="MyTable"
 S3Bucket="sam-bucket-25102002" 
-TemplateFile="../../template/templateShell.yaml"
+TemplateFile="template/templateShell.yaml"
 LambdaFunctionName="LambdaFunctionName"
 StackName="${Project}-stack"
 
