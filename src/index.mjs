@@ -14,6 +14,13 @@ export const handler = async (event) => {
                 age: { N: String(age) }
             }
         };
+        
+        
+        
+        
+        
+        
+        
         await dynamoDB.send(new PutItemCommand(params));
         return {
             statusCode: 200,
