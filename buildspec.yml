@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Starting Deployment..."
+      - chmod +x shellScript/deploy/deploy.sh  # Make deploy.sh executable
+      - ./shellScript/deploy/deploy.sh  # Run the deployment script
+
+  post_build:
+    commands:
+      - echo "Deployment completed successfully!"
