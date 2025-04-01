@@ -3,6 +3,7 @@ import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 const dynamoDB = new DynamoDBClient({ region: "us-east-1" });
 
 export const handler = async (event) => {
+    
     try {
         const { user_id, name, age } = JSON.parse(event.body);
 
@@ -19,7 +20,8 @@ export const handler = async (event) => {
             statusCode: 200,
             body: JSON.stringify({ message: "Item inserted successfully" }),
         };
-    } catch (error) {
+    }
+    catch (error) {
         return {
             statusCode: 500,
             body: JSON.stringify({ error: error.message }),
