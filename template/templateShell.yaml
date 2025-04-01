@@ -84,4 +84,3 @@ Outputs:
   ApiGatewayInvokeURL:
     Description: "API Gateway endpoint URL"
     Value: !Sub "https://${MyApi}.execute-api.${AWS::Region}.amazonaws.com/${ApiStageName}/post"
-
