@@ -79,7 +79,6 @@ Resources:
             RestApiId: !Ref MyApi
             Path: /post
             Method: post
-
 Outputs:
   ApiGatewayInvokeURL:
     Description: "API Gateway endpoint URL"
