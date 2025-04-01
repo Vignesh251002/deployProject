@@ -83,3 +83,9 @@ Outputs:
   ApiGatewayInvokeURL:
     Description: "API Gateway endpoint URL"
     Value: !Sub "https://${MyApi}.execute-api.${AWS::Region}.amazonaws.com/${ApiStageName}/post"
+ LambdaFunctionARN:
+    Description: "ARN of the deployed Lambda function"
+    Value: !GetAtt MyLambdaFunction.Arn
+  DynamoDBTableName:
+    Description: "DynamoDB Table Name"
+    Value: !Ref DynamoDBTableName    
