@@ -1,9 +1,6 @@
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
-
 const dynamoDB = new DynamoDBClient({ region: "us-east-1" });
-
 export const handler = async (event) => {
-    
     try {
         const { user_id, name, age } = JSON.parse(event.body);
 
