@@ -16,8 +16,8 @@ phases:
       - cd lambda-layer && zip -r layer.zip nodejs && cd ..
       
       - echo "Checking if AWS SAM is installed..."
-      - |
-        if ! command -v sam &> /dev/null; then
+    
+        if ! sam --version; then
           echo "AWS SAM not found. Installing..."
           pip install aws-sam-cli 
         else
