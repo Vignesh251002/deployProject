@@ -8,27 +8,23 @@ phases:
 
     commands:
 
-        - echo "Creating Lambda Layer dynamically..."
-
-      # Create directory structure for Lambda Layer
+      - echo "Creating Lambda Layer dynamically..."
       - mkdir -p lambda-layer/nodejs/
 
-      # Install dependencies inside the layer directory (Modify `package.json` if needed)
       - cd lambda-layer/nodejs && npm init -y && npm install axios && cd ../..
 
-      # Zip the Lambda Layer
       - cd lambda-layer && zip -r layer.zip nodejs && cd ..
       
       - echo "Checking if AWS SAM is installed..."
       - |
         if ! command -v sam &> /dev/null; then
           echo "AWS SAM not found. Installing..."
-          pip install aws-sam-cli  # Correct installation method
+          pip install aws-sam-cli 
         else
           echo "AWS SAM is already installed."
         fi
 
-            # Upload the Lambda Layer to S3
+          
       - aws s3 cp lambda-layer/layer.zip s3://$S3_BUCKET/lambda-layers/  
 
   pre_build:
