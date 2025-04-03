@@ -17,7 +17,7 @@ phases:
       
       - echo "Checking if AWS SAM is installed..."
     
-        if ! sam --version; then
+        if ! command -v sam &> /dev/null; then
           echo "AWS SAM not found. Installing..."
           pip install aws-sam-cli 
         else
