@@ -15,12 +15,14 @@ phases:
   install:
     runtime-versions:
       nodejs: 18
+      python: 3.9  # AWS SAM requires Python
+
     commands:
       - echo "Checking if AWS SAM is installed..."
       - |
         if ! command -v sam &> /dev/null; then
           echo "AWS SAM not found. Installing..."
-          npm install -g aws-sam-cli
+          pip install aws-sam-cli  # Correct installation method
         else
           echo "AWS SAM is already installed."
         fi
