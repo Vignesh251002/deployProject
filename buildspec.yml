@@ -57,7 +57,5 @@ phases:
             ApiStageName=$STAGE \
             DynamoDBTableName=$DYNAMODB_TABLE_NAME \
             LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
-          --tags \
-            created_by="vignesh" \
-            purpose="learning" \
+          --tags $(echo $Tags | sed 's/,/ /g')
       - echo "Deployment complete!"
