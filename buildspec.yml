@@ -6,11 +6,12 @@ phases:
       nodejs: 18  # Ensure this matches your project requirements
     commands:
       - echo "Checking if AWS SAM is installed..."
-      - if ! command -v sam &> /dev/null; then
-          echo "AWS SAM not found. Installing...";
-          npm install -g aws-sam-cli;
+      - |
+        if ! command -v sam &> /dev/null; then
+          echo "AWS SAM not found. Installing..."
+          npm install -g aws-sam-cli
         else
-          echo "AWS SAM is already installed.";
+          echo "AWS SAM is already installed."
         fi
 
   pre_build:
@@ -25,13 +26,13 @@ phases:
       - echo "LAMBDA_FUNCTION_NAME: $LAMBDA_FUNCTION_NAME"
       - echo "STACK_NAME: $STACK_NAME"
       - echo "========================================="
-      
       - echo "Checking if S3 bucket exists..."
-      - if ! aws s3 ls "s3://$S3_BUCKET"; then
-          echo "S3 bucket $S3_BUCKET does not exist. Creating...";
-          aws s3 mb "s3://$S3_BUCKET" --region $REGION;
+      - |
+        if ! aws s3 ls "s3://$S3_BUCKET"; then
+          echo "S3 bucket $S3_BUCKET does not exist. Creating..."
+          aws s3 mb "s3://$S3_BUCKET" --region $REGION
         else
-          echo "S3 bucket $S3_BUCKET already exists.";
+          echo "S3 bucket $S3_BUCKET already exists."
         fi
 
   build:
@@ -42,7 +43,8 @@ phases:
   post_build:
     commands:
       - echo "Deploying application..."
-      - sam deploy \
+      - |
+        sam deploy \
           --template-file packagedDeploy-template.yaml \
           --stack-name $STACK_NAME \
           --s3-bucket $S3_BUCKET \
@@ -55,4 +57,3 @@ phases:
               LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
           --tags created_by="vignesh" purpose="learning"
       - echo "Deployment complete!"
-
