@@ -37,7 +37,6 @@ Resources:
         S3Key: lambda-layers/layer.zip
       CompatibleRuntimes:
         - nodejs18.x
-      RetentionPolicy: Retain    
     
   MyLambdaExecutionRole:
     Type: AWS::IAM::Role
