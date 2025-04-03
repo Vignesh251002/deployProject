@@ -4,17 +4,22 @@ Transform: AWS::Serverless-2016-10-31
 Parameters:
   DynamoDBTableName:
     Type: String
-    Default: "MyTable"
+    Default: ""
     Description: "Existing DynamoDB table name"
 
   LambdaFunctionName:
     Type: String
-    Default: "MyLambdaFunction"
+    Default: ""
     Description: "Lambda function name"
 
   ApiStageName:
     Type: String
-    Default: dev 
+    Default: "" 
+    
+  S3BucketName:
+    Type: String
+    Default: ""
+    Description: "S3 Bucket for Lambda layers or packaged code"  
 
 Resources:  
   MyApi:
@@ -22,6 +27,17 @@ Resources:
     Properties:
       StageName: !Ref ApiStageName
       Description: "My Custom API Gateway"
+
+  MyLambdaLayer:
+    Type: AWS::Lambda::LayerVersion
+    Properties:
+      LayerName: MyNodeLambdaLayer
+      Content:
+        S3Bucket: !Ref S3BucketName
+        S3Key: lambda-layers/layer.zip
+      CompatibleRuntimes:
+        - nodejs18.x
+      RetentionPolicy: Retain    
     
   MyLambdaExecutionRole:
     Type: AWS::IAM::Role
