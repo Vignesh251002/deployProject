@@ -25,11 +25,11 @@ phases:
       - echo "========================================="
       - echo "Checking if S3 bucket exists..."
       - |
-        if ! aws s3 ls "s3://$S3Bucket"; then
-          echo "S3 bucket $S3Bucket does not exist. Creating..."
-          aws s3 mb "s3://$S3Bucket" --region $Region
+        if ! aws s3 ls "s3://$S3_Bucket"; then
+          echo "S3 bucket $S3_Bucket does not exist. Creating..."
+          aws s3 mb "s3://$S3_Bucket" --region $Region
         else
-          echo "S3 bucket $S3Bucket already exists."
+          echo "S3 bucket $S3_Bucket already exists."
         fi
 
   build:
