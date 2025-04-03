@@ -54,8 +54,10 @@ phases:
           --no-fail-on-empty-changeset \
           --capabilities CAPABILITY_NAMED_IAM CAPABILITY_IAM \
           --parameter-overrides \
-            ApiStageName=$STAGE
+            ApiStageName=$STAGE \
             DynamoDBTableName=$DYNAMODB_TABLE_NAME \
             LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
-          --tags created_by="vignesh" purpose="learning" \
+          --tags \
+            created_by="vignesh" \
+            purpose="learning" \
       - echo "Deployment complete!"
