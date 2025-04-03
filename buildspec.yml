@@ -72,4 +72,5 @@ phases:
             ApiStageName=$STAGE \
             DynamoDBTableName=$DYNAMODB_TABLE_NAME \
             LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
+            S3BucketName=$S3_BUCKET \
       - echo "Deployment complete!"
