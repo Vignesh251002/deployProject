@@ -94,6 +94,9 @@ Resources:
             RestApiId: !Ref MyApi
             Path: /post
             Method: post
+    Layers: 
+       - !Ref MyLambdaLayer
+       
 Outputs:
   ApiGatewayInvokeURL:
     Description: "API Gateway endpoint URL"
