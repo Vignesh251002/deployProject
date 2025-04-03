@@ -1,14 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    STAGE: $STAGE
-    DYNAMODB_TABLE_NAME: $DYNAMODB_TABLE_NAME
-    S3_BUCKET: $S3_BUCKET
-    TEMPLATE_FILE: $TEMPLATE_FILE
-    LAMBDA_FUNCTION_NAME: $LAMBDA_FUNCTION_NAME
-    STACK_NAME: $STACK_NAME
-    REGION: $REGION
 
 phases:
   install:
@@ -22,7 +13,16 @@ phases:
         else
           echo "AWS SAM is already installed.";
         fi
-
+ pre_build:
+    commands:
+      - echo "========================================="
+      - echo "Using Environment Variables from CodeBuild"
+      - echo "========================================="
+      - echo "DYNAMODB_TABLE_NAME: $DYNAMODB_TABLE_NAME"
+      - echo "S3_BUCKET: $S3_BUCKET"
+      - echo "TEMPLATE_FILE: $TEMPLATE_FILE"
+      - echo "LAMBDA_FUNCTION_NAME: $LAMBDA_FUNCTION_NAME"
+      - echo "STACK_NAME: $STACK_NAME"
   pre_build:
     commands:
       - echo "Checking if S3 bucket exists..."
