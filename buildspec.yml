@@ -39,7 +39,6 @@ phases:
         sam package \
           --template-file $TEMPLATE_FILE \
           --s3-bucket $S3_BUCKET \
-          --output-template-file packagedDeploy-template.yaml \
           --region $REGION
 
   post_build:
@@ -47,7 +46,7 @@ phases:
       - echo "Deploying application..."
       - |
         sam deploy \
-          --template-file packagedDeploy-template.yaml \
+          --template-file $TEMPLATE_FILE \
           --stack-name $STACK_NAME \
           --s3-bucket $S3_BUCKET \
           --region $REGION \
