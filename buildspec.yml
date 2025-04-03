@@ -1,9 +1,20 @@
 version: 0.2
 
+env:
+  variables:
+    STAGE: "dev"
+    PROJECT: "sam-app2"
+    REGION: "us-east-1"
+    DYNAMODB_TABLE_NAME: "MyTable"
+    S3_BUCKET: "sam-bucket-25102002"
+    TEMPLATE_FILE: "template/templateShell.yaml"
+    LAMBDA_FUNCTION_NAME: "LambdaFunctionName"
+    STACK_NAME: "sam-app2-stack"
+
 phases:
   install:
     runtime-versions:
-      nodejs: 18  # Ensure this matches your project requirements
+      nodejs: 18
     commands:
       - echo "Checking if AWS SAM is installed..."
       - |
@@ -19,12 +30,7 @@ phases:
       - echo "========================================="
       - echo "Using Environment Variables from CodeBuild"
       - echo "========================================="
-      - echo "STAGE: $STAGE"
-      - echo "DYNAMODB_TABLE_NAME: $DYNAMODB_TABLE_NAME"
-      - echo "S3_BUCKET: $S3_BUCKET"
-      - echo "TEMPLATE_FILE: $TEMPLATE_FILE"
-      - echo "LAMBDA_FUNCTION_NAME: $LAMBDA_FUNCTION_NAME"
-      - echo "STACK_NAME: $STACK_NAME"
+      - env | sort
       - echo "========================================="
       - echo "Checking if S3 bucket exists..."
       - |
@@ -37,23 +43,11 @@ phases:
 
   build:
     commands:
-      - echo "Packaging application..."
+      - echo "Storing the template to S3."
       - sam package --template-file $TEMPLATE_FILE --s3-bucket $S3_BUCKET --output-template-file packagedDeploy-template.yaml --region $REGION
 
   post_build:
     commands:
       - echo "Deploying application..."
-      - |
-        sam deploy \
-          --template-file packagedDeploy-template.yaml \
-          --stack-name $STACK_NAME \
-          --s3-bucket $S3_BUCKET \
-          --region $REGION \
-          --no-fail-on-empty-changeset \
-          --capabilities CAPABILITY_NAMED_IAM CAPABILITY_IAM \
-          --parameter-overrides \
-              Stage=$STAGE \
-              DynamoDBTableName=$DYNAMODB_TABLE_NAME \
-              LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
-          --tags created_by="vignesh" purpose="learning"
+      - sam deploy --template-file packagedDeploy-template.yaml --stack-name $STACK_NAME --s3-bucket $S3_BUCKET --region $REGION --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM CAPABILITY_IAM --parameter-overrides Stage=$STAGE DynamoDBTableName=$DYNAMODB_TABLE_NAME LambdaFunctionName=$LAMBDA_FUNCTION_NAME --tags created_by="vignesh" purpose="learning"
       - echo "Deployment complete!"
