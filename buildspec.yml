@@ -1,10 +1,9 @@
 version: 0.2
 
-
 phases:
   install:
     runtime-versions:
-      nodejs: 18  # Use the Node.js version you need
+      nodejs: 18  # Ensure this matches your project requirements
     commands:
       - echo "Checking if AWS SAM is installed..."
       - if ! command -v sam &> /dev/null; then
@@ -13,18 +12,20 @@ phases:
         else
           echo "AWS SAM is already installed.";
         fi
- pre_build:
+
+  pre_build:
     commands:
       - echo "========================================="
       - echo "Using Environment Variables from CodeBuild"
       - echo "========================================="
+      - echo "STAGE: $STAGE"
       - echo "DYNAMODB_TABLE_NAME: $DYNAMODB_TABLE_NAME"
       - echo "S3_BUCKET: $S3_BUCKET"
       - echo "TEMPLATE_FILE: $TEMPLATE_FILE"
       - echo "LAMBDA_FUNCTION_NAME: $LAMBDA_FUNCTION_NAME"
       - echo "STACK_NAME: $STACK_NAME"
-  pre_build:
-    commands:
+      - echo "========================================="
+      
       - echo "Checking if S3 bucket exists..."
       - if ! aws s3 ls "s3://$S3_BUCKET"; then
           echo "S3 bucket $S3_BUCKET does not exist. Creating...";
@@ -41,5 +42,17 @@ phases:
   post_build:
     commands:
       - echo "Deploying application..."
-      - sam deploy --template-file packagedDeploy-template.yaml --stack-name $STACK_NAME --s3-bucket $S3_BUCKET --region $REGION --no-fail-on-empty-changeset --capabilities CAPABILITY_NAMED_IAM CAPABILITY_IAM --parameter-overrides Stage=$STAGE DynamoDBTableName=$DYNAMODB_TABLE_NAME LambdaFunctionName=$LAMBDA_FUNCTION_NAME --tags created_by="vignesh" purpose="learning"
+      - sam deploy \
+          --template-file packagedDeploy-template.yaml \
+          --stack-name $STACK_NAME \
+          --s3-bucket $S3_BUCKET \
+          --region $REGION \
+          --no-fail-on-empty-changeset \
+          --capabilities CAPABILITY_NAMED_IAM CAPABILITY_IAM \
+          --parameter-overrides \
+              Stage=$STAGE \
+              DynamoDBTableName=$DYNAMODB_TABLE_NAME \
+              LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
+          --tags created_by="vignesh" purpose="learning"
       - echo "Deployment complete!"
+
