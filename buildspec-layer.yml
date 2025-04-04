@@ -9,17 +9,21 @@ phases:
       - echo "Creating Lambda Layer directory..."
       - mkdir -p lambda-layers/nodejs/
 
-      - echo "Unzipping unit test artifact..."
+      # ✅ Unzip unittest-artifact.zip (from unittest build stage output)
+      - echo "Unzipping unittest-artifact.zip..."
       - unzip -o unittest-artifact.zip -d extracted-files/
 
+      # ✅ List extracted files for debugging
       - echo "Listing extracted files..."
       - ls -R extracted-files/
 
+      # ✅ Move dependencies to Lambda Layer
       - echo "Moving dependencies to Lambda Layer..."
       - mv extracted-files/node_modules lambda-layers/nodejs/
       - mv extracted-files/package.json lambda-layers/nodejs/
       - mv extracted-files/package-lock.json lambda-layers/nodejs/
 
+      # ✅ Zip the Lambda Layer
       - echo "Zipping Lambda Layer..."
       - cd lambda-layers && zip -r layer.zip nodejs && cd ..
 
@@ -41,12 +45,12 @@ phases:
 
       - echo "Packaging SAM template..."
       - sam package \
-          --template-file $TEMPLATE_FILE \
+          --template-file $CODEBUILD_SRC_DIR/template/templateShell.yaml \  
           --s3-bucket $S3_BUCKET \
           --region $REGION \
-          --output-template-file packaged-template.yaml  # ✅ Returns the packaged template
+          --output-template-file packaged-template.yaml
 
 artifacts:
   files:
     - lambda-layers/layer.zip
-    - packaged-template.yaml  # ✅ This ensures the packaged template is passed to the next stage
+    - packaged-template.yaml  # ✅ Pass the packaged template to the next stage
