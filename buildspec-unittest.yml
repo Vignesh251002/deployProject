@@ -1,0 +1,18 @@
+# buildspec-unittest.yml
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Initializing npm..."
+      - npm init -y
+      - echo "Installing dependencies..."
+      - npm install
+  build:
+    commands:
+      - echo "Zipping node_modules and package.json..."
+      - zip -r unittest-artifact.zip node_modules package.json package-lock.json
+artifacts:
+  files:
+    - unittest-artifact.zip

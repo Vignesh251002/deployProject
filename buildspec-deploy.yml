@@ -1,0 +1,26 @@
+#buildspec-deploy.yml
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.9  # AWS SAM requires Python
+  build:
+    commands:
+      - echo "Deploying application..."
+      - |
+        sam deploy \
+          --template-file $TEMPLATE_FILE \
+          --stack-name $STACK_NAME \
+          --s3-bucket $S3_BUCKET \
+          --region $REGION \
+          --no-fail-on-empty-changeset \
+          --capabilities CAPABILITY_NAMED_IAM CAPABILITY_IAM \
+          --parameter-overrides \
+            ApiStageName=$STAGE \
+            DynamoDBTableName=$DYNAMODB_TABLE_NAME \
+            LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
+            S3BucketName=$S3_BUCKET \
+      - echo "Deployment complete!"
+artifacts:
+  files:
+    - '**/*'
