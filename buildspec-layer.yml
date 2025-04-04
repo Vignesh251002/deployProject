@@ -42,6 +42,7 @@ phases:
     commands:
       - echo "Listing all files in the source directory..."
       - ls -R $CODEBUILD_SRC_DIR  # Debugging step
+      - echo "Checkkkkkkkkkkkkkkk"
       - ls -R $CODEBUILD_SRC_DIR/template
 
 
