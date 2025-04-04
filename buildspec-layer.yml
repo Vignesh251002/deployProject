@@ -12,8 +12,13 @@ phases:
       - echo "Unzipping unit test artifact..."
       - unzip -o unittest-artifact.zip -d extracted-files/
 
+      - echo "Listing extracted files..."
+      - ls -R extracted-files/
+
       - echo "Moving dependencies to Lambda Layer..."
-      - mv extracted-files/{node_modules,package.json,package-lock.json} lambda-layers/nodejs/
+      - mv extracted-files/node_modules lambda-layers/nodejs/
+      - mv extracted-files/package.json lambda-layers/nodejs/
+      - mv extracted-files/package-lock.json lambda-layers/nodejs/
 
       - echo "Zipping Lambda Layer..."
       - cd lambda-layers && zip -r layer.zip nodejs && cd ..
