@@ -42,7 +42,9 @@ phases:
     commands:
       - echo "Listing all files in the source directory..."
       - ls -R $CODEBUILD_SRC_DIR  # Debugging step
-      
+      - ls -R $CODEBUILD_SRC_DIR/template
+
+
       - echo "Uploading Lambda Layer to S3..."
       - aws s3 cp lambda-layers/layer.zip s3://$S3_BUCKET/lambda-layers/
 
