@@ -51,9 +51,10 @@ phases:
 
       - echo "Packaging SAM template..."
       - sam package --template-file template/templateShell.yaml \
-            --s3-bucket $S3_BUCKET \
-            --region $REGION \
-            --output-template-file packaged-template.yaml
+                --s3-bucket dev-taskproject-cloudformation-bucket \
+                --region us-east-1\
+                --output-template-file packaged-template.yaml
+
 
 
 artifacts:
