@@ -9,7 +9,7 @@ phases:
       - echo "Deploying application..."
       - |
         sam deploy \
-          --template-file $TEMPLATE_FILE \
+          --template-file packaged-template.yaml\
           --stack-name $STACK_NAME \
           --s3-bucket $S3_BUCKET \
           --region $REGION \

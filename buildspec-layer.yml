@@ -57,13 +57,6 @@ phases:
           --region ${REGION} \
           --output-template-file packaged-template.yaml
 
-
-
-
-
-
-
-
 artifacts:
   files:
     - lambda-layers/layer.zip
