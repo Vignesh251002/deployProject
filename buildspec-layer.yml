@@ -51,7 +51,7 @@ phases:
 
       - echo "Packaging SAM template..."
       - |
-      - sam package \
+        sam package \
           --template-file ${TEMPLATE_FILE} \
           --s3-bucket ${S3_BUCKET} \
           --region ${REGION} \
