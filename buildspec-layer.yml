@@ -51,12 +51,12 @@ phases:
 
       - echo "Packaging SAM template..."
       - |
-        sam package \
-          --debug
-          --template-file ${TEMPLATE_FILE} \
-          --s3-bucket ${S3_BUCKET} \
-          --region ${REGION} \
-          --output-template-file packaged-template.yaml
+        sam package --debug \
+            --template-file ${TEMPLATE_FILE} \
+            --s3-bucket ${S3_BUCKET} \
+            --region ${REGION} \
+            --output-template-file packaged-template.yaml
+
 
 artifacts:
   files:
