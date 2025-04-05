@@ -50,10 +50,13 @@ phases:
       - aws s3 cp lambda-layers/layer.zip s3://$S3_BUCKET/lambda-layers/
 
       - echo "Packaging SAM template..."
-      - sam package --template-file ${TEMPLATE_FILE} \
-       --s3-bucket ${S3_BUCKET} \
-       --region ${REGION} \
-       --output-template-file packaged-template.yaml
+      - |
+      - sam package \
+          --template-file ${TEMPLATE_FILE} \
+          --s3-bucket ${S3_BUCKET} \
+          --region ${REGION} \
+          --output-template-file packaged-template.yaml
+
 
 
 
