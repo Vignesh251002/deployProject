@@ -30,7 +30,9 @@ phases:
       - echo "Installing dependencies..."
       - npm install
       - echo "Installing vitest for unit testing..."
-      - npm install -D vitest
+      - npm install vitest --save-dev
+      - npm install @aws-sdk/client-dynamodb
+
   build:
     commands:
       - echo "Running unit tests..."
