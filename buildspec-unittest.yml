@@ -31,7 +31,8 @@ phases:
       - npm install
       - echo "Installing vitest for unit testing..."
       - npm install vitest --save-dev
-      - npm install @aws-sdk/client-dynamodb
+      - npm install @aws-sdk/client-dynamodb aws-sdk-client-mock
+
 
   build:
     commands:

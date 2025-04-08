@@ -64,9 +64,29 @@
 
 import { describe, it, expect } from 'vitest'
 import { handler } from '../src/index.mjs';
+import { mockClient } from 'aws-sdk-client-mock';
+import { DynamoDBClient, PutItemCommand } from '@aws-sdk/client-dynamodb';
 
-describe('Lambda Input Validation', () => {
-    it('should return 400 when user_id is missing', async () => {
+const ddbMock = mockClient(DynamoDBClient);
+
+describe('Lambda Validation', () => {
+    it('should insert item successfully', async () => {
+        ddbMock.on(PutItemCommand).resolves({}); // mock successful insertion
+    
+        const event = {
+          body: JSON.stringify({
+            user_id: "123",
+            name: "John",
+            age: 30
+          })
+        };
+    
+        const res = await handler(event);
+        expect(res.statusCode).toBe(200);
+        expect(JSON.parse(res.body)).toEqual({ message: "Item inserted successfully" });
+      });
+      
+    it('user_id is missing', async () => {
         const event = {
             body: JSON.stringify({ name: "Alice", age: 22 })
         };
@@ -79,7 +99,7 @@ describe('Lambda Input Validation', () => {
         });
     });
 
-    it('should return 400 when name is missing', async () => {
+    it('name is missing', async () => {
         const event = {
             body: JSON.stringify({ user_id: "1", age: 22 })
         };
@@ -92,7 +112,7 @@ describe('Lambda Input Validation', () => {
         });
     });
 
-    it('should return 400 when age is missing', async () => {
+    it('age is missing', async () => {
         const event = {
             body: JSON.stringify({ user_id: "1", name: "Bob" })
         };
@@ -104,5 +124,21 @@ describe('Lambda Input Validation', () => {
             error: "Missing required fields: user_id, name, age"
         });
     });
+
+    it('should return 400 if DynamoDB throws an error', async () => {
+        ddbMock.on(PutItemCommand).rejects({});
+    
+        const event = {
+          body: JSON.stringify({
+            user_id: "456",
+            name: "Jane",
+            age: 25
+          })
+        };
+    
+        const res = await handler(event);
+        expect(res.statusCode).toBe(400);
+        expect(JSON.parse(res.body)).toEqual({ message: "DynamoDB Error" });
+      });
 });
 
