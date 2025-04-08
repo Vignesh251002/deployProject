@@ -9,21 +9,21 @@ phases:
       - echo "Creating Lambda Layer directory..."
       - mkdir -p lambda-layers/nodejs/
 
-      # ✅ Unzip unittest-artifact.zip (from unittest build stage output)
+      # Unzip unittest-artifact.zip (from unittest build stage output)
       - echo "Unzipping unittest-artifact.zip..."
       - unzip -o unittest-artifact.zip -d extracted-files/
 
-      # ✅ List extracted files for debugging
+      # List extracted files for debugging
       - echo "Listing extracted files..."
       - ls -R extracted-files/
 
-      # ✅ Move dependencies to Lambda Layer
+      # Move dependencies to Lambda Layer
       - echo "Moving dependencies to Lambda Layer..."
       - mv extracted-files/node_modules lambda-layers/nodejs/
       - mv extracted-files/package.json lambda-layers/nodejs/
       - mv extracted-files/package-lock.json lambda-layers/nodejs/
 
-      # ✅ Zip the Lambda Layer
+      # Zip the Lambda Layer
       - echo "Zipping Lambda Layer..."
       - cd lambda-layers && zip -r layer.zip nodejs && cd ..
 
@@ -40,15 +40,11 @@ phases:
 
   build:
     commands:
-      - echo "Listing all files in the source directory..."
-      - ls -R $CODEBUILD_SRC_DIR  # Debugging step
-      - echo "Checkkkkkkkkkkkkkkk"
-      - ls -R $CODEBUILD_SRC_DIR/template
-
-
+      # uploading the zip file in s3 bucket
       - echo "Uploading Lambda Layer to S3..."
       - aws s3 cp lambda-layers/layer.zip s3://$S3_BUCKET/lambda-layers/
 
+      #uploading the templat to s3 bucket
       - echo "Packaging SAM template..."
       - |
         sam package --debug \
@@ -56,7 +52,6 @@ phases:
             --s3-bucket ${S3_BUCKET} \
             --region ${REGION} \
             --output-template-file packaged-template.yaml
-
 
 artifacts:
   files:

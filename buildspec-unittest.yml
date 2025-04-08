@@ -6,14 +6,13 @@ phases:
       nodejs: 18
     commands:
       - echo "Initializing npm..."
-      - npm init -y
+      - npm init -y  #This line used to install package.json
       - echo "Installing dependencies..."
-      - npm install
-  build:
-    commands:
-      - echo "Zipping node_modules and package.json..."
-      - zip -r unittest-artifact.zip node_modules package.json package-lock.json
+      - npm install  #This line install the dependencies and generate the package-lock.json and node_modules folder
+  # build:
+  #   commands:
+  #     - echo "Zipping node_modules and package.json..."
+  #     - zip -r unittest-artifact.zip node_modules package.json package-lock.json
 artifacts:
   files:
-    - unittest-artifact.zip
     - '**/*'
