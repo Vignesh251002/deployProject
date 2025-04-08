@@ -9,6 +9,9 @@ phases:
       - echo "Source directory is:"
       - echo "$CODEBUILD_SRC_DIR"
 
+      - echo "Files in root source dir:"
+      - ls -la $CODEBUILD_SRC_DIR
+
       - echo "Creating Lambda Layer directory..."
       - mkdir -p lambda-layers/nodejs/
 
