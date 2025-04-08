@@ -6,22 +6,29 @@ phases:
       nodejs: 18
       python: 3.9
     commands:
+      - echo "Source directory is:"
+      - echo "$CODEBUILD_SRC_DIR"
+
       - echo "Creating Lambda Layer directory..."
       - mkdir -p lambda-layers/nodejs/
 
       # Unzip unittest-artifact.zip (from unittest build stage output)
-      - echo "Unzipping unittest-artifact.zip..."
-      - unzip -o unittest-artifact.zip -d extracted-files/
+      # - echo "Unzipping unittest-artifact.zip..."
+      # - unzip -o unittest-artifact.zip -d extracted-files/
 
       # List extracted files for debugging
-      - echo "Listing extracted files..."
-      - ls -R extracted-files/
+      # - echo "Listing extracted files..."
+      # - ls -R extracted-files/
 
       # Move dependencies to Lambda Layer
+      # - echo "Moving dependencies to Lambda Layer..."
+      # - mv extracted-files/node_modules lambda-layers/nodejs/
+      # - mv extracted-files/package.json lambda-layers/nodejs/
+      # - mv extracted-files/package-lock.json lambda-layers/nodejs/
       - echo "Moving dependencies to Lambda Layer..."
-      - mv extracted-files/node_modules lambda-layers/nodejs/
-      - mv extracted-files/package.json lambda-layers/nodejs/
-      - mv extracted-files/package-lock.json lambda-layers/nodejs/
+      - mv node_modules lambda-layers/nodejs/
+      - mv package.json lambda-layers/nodejs/
+      - mv package-lock.json lambda-layers/nodejs/
 
       # Zip the Lambda Layer
       - echo "Zipping Lambda Layer..."
