@@ -1,18 +1,40 @@
-# buildspec-unittest.yml
+# # buildspec-unittest.yml
+# version: 0.2
+# phases:
+#   install:
+#     runtime-versions:
+#       nodejs: 18
+#     commands:
+#       - echo "Initializing npm..."
+#       - npm init -y  #This line used to install package.json
+#       - echo "Installing dependencies..."
+#       - npm install  #This line install the dependencies and generate the package-lock.json and node_modules folder
+#   # build:
+#   #   commands:
+#   #     - echo "Zipping node_modules and package.json..."
+#   #     - zip -r unittest-artifact.zip node_modules package.json package-lock.json
+# artifacts:
+#   files:
+#     - '**/*'
+
+
 version: 0.2
+
 phases:
   install:
     runtime-versions:
       nodejs: 18
     commands:
       - echo "Initializing npm..."
-      - npm init -y  #This line used to install package.json
+      - npm init -y
       - echo "Installing dependencies..."
-      - npm install  #This line install the dependencies and generate the package-lock.json and node_modules folder
-  # build:
-  #   commands:
-  #     - echo "Zipping node_modules and package.json..."
-  #     - zip -r unittest-artifact.zip node_modules package.json package-lock.json
+      - npm install
+      - echo "Installing vitest for unit testing..."
+      - npm install -D vitest
+  build:
+    commands:
+      - echo "Running unit tests..."
+      - npx vitest run
 artifacts:
   files:
     - '**/*'
