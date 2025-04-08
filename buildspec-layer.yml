@@ -57,7 +57,7 @@ phases:
       #uploading the templat to s3 bucket
       - echo "Packaging SAM template..."
       - |
-      - sam package --debug \
+        sam package --debug \
           --template-file ${TEMPLATE_FILE} \
           --s3-bucket ${S3_BUCKET} \
           --s3-prefix template \
