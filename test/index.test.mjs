@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest'
 import { handler } from '../src/index.mjs';
 import { mockClient } from 'aws-sdk-client-mock';
 import { DynamoDBClient, PutItemCommand } from '@aws-sdk/client-dynamodb';
