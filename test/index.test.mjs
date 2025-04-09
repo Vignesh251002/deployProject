@@ -6,6 +6,8 @@ import { DynamoDBClient, PutItemCommand } from '@aws-sdk/client-dynamodb';
 const ddbMock = mockClient(DynamoDBClient);
 
 describe('Lambda Validation', () => {
+
+    //case 1
     it('should insert item successfully', async () => {
         ddbMock.on(PutItemCommand).resolves({}); // mock successful insertion
     
@@ -21,7 +23,8 @@ describe('Lambda Validation', () => {
         expect(res.statusCode).toBe(200);
         expect(JSON.parse(res.body)).toEqual({ message: "Item inserted successfully" });
       });
-      
+     
+    //case 2  
     it('user_id is missing', async () => {
         const event = {
             body: JSON.stringify({ name: "Alice", age: 22 })
@@ -35,6 +38,7 @@ describe('Lambda Validation', () => {
         });
     });
 
+    //case 3
     it('name is missing', async () => {
         const event = {
             body: JSON.stringify({ user_id: "1", age: 22 })
@@ -48,6 +52,7 @@ describe('Lambda Validation', () => {
         });
     });
 
+    //case 4
     it('age is missing', async () => {
         const event = {
             body: JSON.stringify({ user_id: "1", name: "Bob" })
@@ -61,6 +66,7 @@ describe('Lambda Validation', () => {
         });
     });
 
+    //case 5
     it('should return 400 if DynamoDB throws an error', async () => {
         ddbMock.on(PutItemCommand).rejects(new Error("DynamoDB Error"));
     
@@ -75,5 +81,5 @@ describe('Lambda Validation', () => {
         const res = await handler(event);
         expect(res.statusCode).toBe(400);
         expect(JSON.parse(res.body)).toEqual({ error: "DynamoDB Error"});
-         });
+    });
 });

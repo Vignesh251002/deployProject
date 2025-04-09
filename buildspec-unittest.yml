@@ -29,8 +29,9 @@ phases:
       - npm init -y
       - echo "Installing dependencies..."
       - npm install
-      - echo "Installing vitest for unit testing..."
-      - npm install vitest --save-dev
+      - echo "Installing jest for unit testing..."
+      - npm install --save-dev jest babel-jest @babel/core @babel/preset-env
+      - npm set-script test "jest"
       - npm install @aws-sdk/client-dynamodb aws-sdk-client-mock
 
 
@@ -38,6 +39,7 @@ phases:
     commands:
       - echo "Running unit tests..."
       - npx vitest run
+
 artifacts:
   files:
     - '**/*'
