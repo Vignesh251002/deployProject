@@ -48,9 +48,6 @@ Resources:
         S3Key: lambda-layers/layer.zip
       CompatibleRuntimes:
         - nodejs18.x
-      Tags:
-        created_by: !Ref CreatedBy
-        purpose: !Ref Purpose 
     
   MyLambdaExecutionRole:
     Type: AWS::IAM::Role
