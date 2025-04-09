@@ -48,6 +48,9 @@ phases:
           --region ${REGION} \
           --output-template-file packaged-template.yaml
 
+      - echo "Showing packaged-template.yaml contents..."
+      - cat packaged-template.yaml 
+
 artifacts:
   files:
     - '**/*'
