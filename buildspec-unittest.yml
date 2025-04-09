@@ -31,14 +31,14 @@ phases:
       - npm install
       - echo "Installing jest for unit testing..."
       - npm install --save-dev jest babel-jest @babel/core @babel/preset-env
-      - sed -i s|echo \\"Error: no test specified\\" && exit 1|jest|' package.json
+      - jq '.scripts.test = "jest"' package.json > tmp.json && mv tmp.json package.json
       - npm install @aws-sdk/client-dynamodb aws-sdk-client-mock
 
 
   build:
     commands:
       - echo "Running unit tests..."
-      - npx vitest run
+      - npm test
 
 artifacts:
   files:
