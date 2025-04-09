@@ -36,10 +36,8 @@ Resources:
       StageName: !Ref ApiStageName
       Description: "My Custom API Gateway"
       Tags:
-        - Key: created_by
-          Value: !Ref CreatedBy
-        - Key: purpose
-          Value: !Ref Purpose
+        created_by: !Ref CreatedBy
+        purpose: !Ref Purpose
 
   MyLambdaLayer:
     Type: AWS::Lambda::LayerVersion
@@ -51,10 +49,8 @@ Resources:
       CompatibleRuntimes:
         - nodejs18.x
       Tags:
-        - Key: created_by
-          Value: !Ref CreatedBy
-        - Key: purpose
-          Value: !Ref Purpose  
+        created_by: !Ref CreatedBy
+        purpose: !Ref Purpose 
     
   MyLambdaExecutionRole:
     Type: AWS::IAM::Role
@@ -115,10 +111,8 @@ Resources:
       Layers: 
         - !Ref MyLambdaLayer
       Tags:
-        - Key: created_by
-          Value: !Ref CreatedBy
-        - Key: purpose
-          Value: !Ref Purpose  
+        created_by: !Ref CreatedBy
+        purpose: !Ref Purpose 
        
 Outputs:
   ApiGatewayInvokeURL:
