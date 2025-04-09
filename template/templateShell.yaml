@@ -19,7 +19,15 @@ Parameters:
   S3BucketName:
     Type: String
     Default: ""
-    Description: "S3 Bucket for Lambda layers or packaged code"  
+    Description: "S3 Bucket for Lambda layers or packaged code" 
+
+  CreatedBy:
+    Type: String
+    Default: ""
+
+  Purpose:
+    Type: String
+    Default: ""   
 
 Resources:  
   MyApi:
@@ -27,6 +35,11 @@ Resources:
     Properties:
       StageName: !Ref ApiStageName
       Description: "My Custom API Gateway"
+      Tags:
+        - Key: created_by
+          Value: !Ref CreatedBy
+        - Key: purpose
+          Value: !Ref Purpose
 
   MyLambdaLayer:
     Type: AWS::Lambda::LayerVersion
@@ -37,6 +50,11 @@ Resources:
         S3Key: lambda-layers/layer.zip
       CompatibleRuntimes:
         - nodejs18.x
+      Tags:
+        - Key: created_by
+          Value: !Ref CreatedBy
+        - Key: purpose
+          Value: !Ref Purpose  
     
   MyLambdaExecutionRole:
     Type: AWS::IAM::Role
@@ -96,6 +114,11 @@ Resources:
             Method: post
       Layers: 
         - !Ref MyLambdaLayer
+      Tags:
+        - Key: created_by
+          Value: !Ref CreatedBy
+        - Key: purpose
+          Value: !Ref Purpose  
        
 Outputs:
   ApiGatewayInvokeURL:

@@ -20,6 +20,8 @@ phases:
             DynamoDBTableName=$DYNAMODB_TABLE_NAME \
             LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
             S3BucketName=$S3_BUCKET \
+            createdBy=$CREATED_BY \
+            purpose=$PURPOSE \
             
       - echo "Deployment complete!"
 artifacts:
